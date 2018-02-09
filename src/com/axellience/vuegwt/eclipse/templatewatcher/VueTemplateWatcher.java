@@ -12,16 +12,11 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 
-import com.axellience.vuegwt.eclipse.projectmanager.VueProjectsManager;
-import com.axellience.vuegwt.eclipse.templatewatcher.refreshvuetemplate.RefreshVueTemplateJob;
-
 public class VueTemplateWatcher implements IResourceChangeListener, IResourceDeltaVisitor {
-	private final VueProjectsManager vueProjectManager;
-	private final Set<VueTemplateInfo> templatesToRefresh;
+	private final Set<IFile> javaFilesToRefresh;
 
 	public VueTemplateWatcher() {
-		vueProjectManager = new VueProjectsManager();
-		templatesToRefresh = new HashSet<>();
+		javaFilesToRefresh = new HashSet<>();
 	}
 
 	public void resourceChanged(IResourceChangeEvent event) {
@@ -29,9 +24,9 @@ public class VueTemplateWatcher implements IResourceChangeListener, IResourceDel
 			return;
 
 		try {
-			templatesToRefresh.clear();
+			javaFilesToRefresh.clear();
 			event.getDelta().accept(this);
-			new RefreshVueTemplateJob(templatesToRefresh).schedule();
+			new RefreshVueTemplateJob(javaFilesToRefresh).schedule();
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
@@ -49,14 +44,7 @@ public class VueTemplateWatcher implements IResourceChangeListener, IResourceDel
 		if (!componentJavaFile.exists())
 			return true;
 
-		vueProjectManager.getInfoForProject(htmlFile.getProject()).ifPresent(vueProjectInfo -> {
-			vueProjectInfo.getResourceSourcePath(htmlFile)
-					.flatMap(sourcePath -> 
-						vueProjectInfo.getOutputPath()
-							.map(outputPath -> new VueTemplateInfo(htmlFile, componentJavaFile, sourcePath, outputPath))
-					)
-					.ifPresent(templatesToRefresh::add);
-		});
+		javaFilesToRefresh.add(componentJavaFile);
 		return true;
 	}
 
