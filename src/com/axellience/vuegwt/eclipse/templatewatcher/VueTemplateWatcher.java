@@ -1,5 +1,7 @@
 package com.axellience.vuegwt.eclipse.templatewatcher;
 
+import static com.axellience.vuegwt.eclipse.Startup.PLUGIN_ID;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,11 +12,17 @@ import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 
 import com.axellience.vuegwt.eclipse.vueproject.VueProjectsManager;
 
 public class VueTemplateWatcher implements IResourceChangeListener, IResourceDeltaVisitor {
+	private final ILog LOGGER = Platform.getLog(Platform.getBundle(PLUGIN_ID));
+
 	private final Set<IFile> javaFilesToRefresh;
 	private final VueProjectsManager vueProjectsManager;
 
@@ -32,7 +40,7 @@ public class VueTemplateWatcher implements IResourceChangeListener, IResourceDel
 			event.getDelta().accept(this);
 			new RefreshVueTemplateJob(javaFilesToRefresh).schedule();
 		} catch (CoreException e) {
-			e.printStackTrace();
+			LOGGER.log(new Status(IStatus.WARNING, PLUGIN_ID, "Error while processing change notification", e));
 		}
 	}
 
@@ -51,7 +59,7 @@ public class VueTemplateWatcher implements IResourceChangeListener, IResourceDel
 		// Filter out files that are in the project target
 		if (!isInProjectClassPath(resource))
 			return true;
-		
+
 		javaFilesToRefresh.add(componentJavaFile);
 		return true;
 	}
