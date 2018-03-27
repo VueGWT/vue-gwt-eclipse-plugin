@@ -4,7 +4,7 @@
       label="Vue GWT"
       version="0.0.2"
       provider-name="GenMyModel"
-      plugin="Vue_GWT">
+      plugin="com.axellience.vuegwt.eclipse">
 
    <description url="https://github.com/Axellience/vue-gwt">
       Add support for Vue GWT in Eclipse.
@@ -37,6 +37,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
    </license>
+
+   <url>
+      <update url="http://eclipse.axellience.com/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.jdt.core" version="3.13.100" match="greaterOrEqual"/>
+   </requires>
 
    <plugin
          id="com.axellience.vuegwt.eclipse"
