@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Vue GWT
-Bundle-SymbolicName: Vue_GWT;singleton:=true
+Bundle-SymbolicName: com.axellience.vuegwt.eclipse;singleton:=true
 Bundle-Activator: com.axellience.vuegwt.eclipse.Startup
-Bundle-Version: 0.0.1
+Bundle-Version: 0.0.2
 Bundle-Vendor: Axellience
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="Axellience" url="http://eclipse.axellience.com">
+      Axellience Eclipse update site.
+   </description>
+   <feature url="features/com.axellience.vuegwt.eclipse.feature_0.0.2.jar" id="com.axellience.vuegwt.eclipse.feature" version="0.0.2">
+      <category name="vue-gwt"/>
+   </feature>
+   <category-def name="vue-gwt" label="Vue GWT">
+      <description>
+         Vue GWT Eclipse Plugin
+      </description>
+   </category-def>
+</site>

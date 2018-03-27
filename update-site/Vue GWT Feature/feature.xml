@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="Vue_GWT"
+      id="com.axellience.vuegwt.eclipse.feature"
       label="Vue GWT"
-      version="0.0.1"
+      version="0.0.2"
       provider-name="GenMyModel"
       plugin="Vue_GWT">
 
@@ -39,10 +39,10 @@ SOFTWARE.
    </license>
 
    <plugin
-         id="Vue_GWT"
-         download-size="7"
-         install-size="7"
-         version="0.0.1"
+         id="com.axellience.vuegwt.eclipse"
+         download-size="0"
+         install-size="0"
+         version="0.0.2"
          unpack="false"/>
 
 </feature>
