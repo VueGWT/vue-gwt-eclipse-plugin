@@ -1,5 +1,6 @@
 package com.axellience.vuegwt.eclipse;
 
+import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.ui.IStartup;
 
@@ -11,6 +12,6 @@ public class Startup implements IStartup {
 	@Override
 	public void earlyStartup() {
 		this.vueTemplateWatcher = new VueTemplateWatcher();
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(vueTemplateWatcher);
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(vueTemplateWatcher, IResourceChangeEvent.POST_CHANGE);
 	}
 }

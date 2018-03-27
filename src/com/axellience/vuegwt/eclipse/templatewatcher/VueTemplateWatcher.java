@@ -12,11 +12,15 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 
+import com.axellience.vuegwt.eclipse.vueproject.VueProjectsManager;
+
 public class VueTemplateWatcher implements IResourceChangeListener, IResourceDeltaVisitor {
 	private final Set<IFile> javaFilesToRefresh;
+	private final VueProjectsManager vueProjectsManager;
 
 	public VueTemplateWatcher() {
 		javaFilesToRefresh = new HashSet<>();
+		vueProjectsManager = new VueProjectsManager();
 	}
 
 	public void resourceChanged(IResourceChangeEvent event) {
@@ -44,8 +48,16 @@ public class VueTemplateWatcher implements IResourceChangeListener, IResourceDel
 		if (!componentJavaFile.exists())
 			return true;
 
+		// Filter out files that are in the project target
+		if (!isInProjectClassPath(resource))
+			return true;
+		
 		javaFilesToRefresh.add(componentJavaFile);
 		return true;
+	}
+
+	private boolean isInProjectClassPath(IResource resource) {
+		return vueProjectsManager.getResourceSourcePath(resource).isPresent();
 	}
 
 	private IFile getSibblingJavaFile(IResource resource) {
